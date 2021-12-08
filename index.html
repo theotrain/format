@@ -1,114 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>hi there</title>
-        
-        <style>
-            html, body {
-              font-family: helvetica, sans-serif;
-              box-sizing: border-box;
-              font-size: 10px;
-            }
-            #results {
-              display: flex;
-              flex-flow: row wrap;
-            }
-            .car {
-              display: inline-block;
-              position: relative;
-              width: 46%;
-              height: 3.8em;
-              border-bottom: 1px dotted #ccc;
-              padding: 0 10px 0 10px;
-            }
-            .car:nth-child(even) {
-              border-left: 1px dotted #ccc;
-            }
-            /*.car:nth-child(odd) {
+
+<head>
+  <meta charset="UTF-8">
+  <title>hi there</title>
+
+  <style>
+    html,
+    body {
+      font-family: helvetica, sans-serif;
+      box-sizing: border-box;
+      font-size: 10px;
+    }
+
+    #results {
+      display: flex;
+      flex-flow: row wrap;
+    }
+
+    .car {
+      display: inline-block;
+      position: relative;
+      width: 46%;
+      height: 3.8em;
+      border-bottom: 1px dotted #ccc;
+      padding: 0 10px 0 10px;
+    }
+
+    .car:nth-child(even) {
+      border-left: 1px dotted #ccc;
+    }
+
+    /*.car:nth-child(odd) {
               border-right: 1px dotted #ccc;
             }*/
-            .stock {
-              font-size: 1.5em;
-              margin-left: .4em;
-              position: relative;
-              top: 5px;
-              letter-spacing: .02em
-            }
-            .stock, .title, .check {
-              display: inline-block;
-            }
-            .title {
-              margin-left: 1em;
-            }
-            .age {
-              /*display: inline-block;*/
-              position: absolute;
-              right: 0px;
-              top: 0px;
-              margin: 5px 10px;
-            }
-            .check {
-              width: 1.2em;
-              height: 1.2em;
-              border: 1px solid #aaa;
-              border-radius: 2px;
-              position: relative;
-              top: 7px;
-              /*margin-top: 20px;*/
-            }
-            .options {
-              font-size: .9em;
-              color: #ccc;
-              position: absolute;
-              right: 0px;
-              bottom: 0px;
-              margin: 0px 10px 5px 0px;
-            }
-            #paste {
-              display: block;
-              width: 90%;
-              height: 500px;
-              margin-bottom: 15px;
-            }
-            /*#form {
+    .stock {
+      font-size: 1.5em;
+      margin-left: .4em;
+      position: relative;
+      margin-top: 4px;
+      letter-spacing: .02em
+    }
+
+    .stock,
+    .title,
+    .check,
+    .photos {
+      display: inline-block;
+    }
+
+    .title,
+    .photos {
+      margin-left: 1em;
+    }
+
+    .title,
+    .photos {
+      margin-top: 3px;
+      max-width: 165px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .age {
+      /*display: inline-block;*/
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      margin: 5px 10px;
+    }
+
+    .check {
+      width: 1.2em;
+      height: 1.2em;
+      border: 1px solid #aaa;
+      border-radius: 2px;
+      position: relative;
+      top: 2px;
+      /*margin-top: 20px;*/
+    }
+
+    .options,
+    .vin {
+      /* font-size: .9em; */
+      color: #aaa;
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      margin: 0px 10px 5px 0px;
+    }
+
+    /* .photos {
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      margin: 5px 10px;
+    } */
+
+    #paste {
+      display: block;
+      width: 90%;
+      height: 500px;
+      margin-bottom: 15px;
+    }
+
+    /*#form {
               display: ;
             }*/
-        </style>
-        
-    </head>
+  </style>
 
-    <body>
-        <div id="form">
-          <textarea id="paste" type="textarea" name="paste"></textarea>
-          <button onclick="showCars()">format</button>
-        </div>
-        <div id="results"></div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <!-- <script src="cars.js"></script> -->
-        <script>
-          // $('.results').hide();
-          //remove cars with photos and order cars by stock#
-          function showCars() {
-            console.log('show cars');
-            $('#results').show();
-            $('#form').hide();
-            let cars_raw = $('#paste').val();
-            console.log(cars_raw);
-            $cars = $('<div><table>' + cars_raw + '</table></div>').find('img[src*="missing-photo"]').parents('tr').sort((c1,c2) => (c1.dataset.vehicleStock > c2.dataset.vehicleStock) ? 1 : ((c2.dataset.vehicleStock > c1.dataset.vehicleStock) ? -1 : 0));
-            $cars.each( function(idx) {
-              console.log(this.outerHTML);
-              let check = "<div class='check'></div>";
-              let options = "<div class='options'>CH KTNF CFWF</div>"; 
-              let stock = "<div class='stock'>" + this.dataset.vehicleStock + "</div>"; 
-              let title = "<div class='title'>" + this.dataset.vehicleTitle + "</div>"; 
-              let age = "<div class='age'>" + $(this).find('.age-container').html().trim() + "</div>"; 
-              $( "#results" ).append( "<div class='car'>" + check + stock + title + age + options + "</div>");
-            });
-          }
-          
-        </script>
-    </body>
+</head>
+
+<body>
+  <div id="form">
+    <textarea id="paste" type="textarea" name="paste"></textarea>
+    <button onclick="showCars()">format</button>
+  </div>
+  <div id="results"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- <script src="cars.js"></script> -->
+  <script>
+    // $('.results').hide();
+    //remove cars with photos and order cars by stock#
+    function showCars() {
+      console.log('show cars');
+      $('#results').show();
+      $('#form').hide();
+      let cars_raw = $('#paste').val();
+      // console.log(cars_raw);
+      // $cars = $('<div><table>' + cars_raw + '</table></div>').find('img[src*="missing-photo"]').parents('tr').sort((c1,c2) => (c1.dataset.vehicleStock > c2.dataset.vehicleStock) ? 1 : ((c2.dataset.vehicleStock > c1.dataset.vehicleStock) ? -1 : 0));
+      $cars = $('<div><table>' + cars_raw + '</table></div>').find('ul.list-inline').parents('tr').sort((c1, c2) => (c1
+        .dataset.vehicleStock > c2.dataset.vehicleStock) ? 1 : ((c2.dataset.vehicleStock > c1.dataset
+        .vehicleStock) ? -1 : 0));
+      $cars.each(function (idx) {
+        // console.log(this.outerHTML);
+        let photoString = $(this).find('ul.list-inline').children('li').eq(1).find('a').text().trim();
+        // let hasPhotos = photoString.search(/\(/) != -1
+        let hasPhotos = photoString.includes('(')
+        console.log(photoString);
+        let photos;
+        if (hasPhotos) {
+          let open = photoString.indexOf('(')
+          let close = photoString.indexOf(')')
+          let photoCount = parseInt(photoString.slice(open + 1, close))
+          if (photoCount > 5) return true
+          console.log(photoCount)
+          photos = "<div class='photos'> [" + photoCount + " pics]</div>";
+        } else {
+          photos = "<div class='photos'></div>";
+        }
+        let check = "<div class='check'></div>";
+        // let options = "<div class='options'>CH KTNF CFWF</div>";
+        let stock = "<div class='stock'>" + this.dataset.vehicleStock + "</div>";
+        let title = "<div class='title'>" + this.dataset.vehicleTitle + "</div>";
+        let vin = "<div class='vin'>" + this.dataset.vehicleVin + "</div>";
+        let age = "<div class='age'>" + $(this).find('.age-container').html().trim() + "</div>";
+        // $("#results").append("<div class='car'>" + check + stock + title + age + options + "</div>");
+        $("#results").append("<div class='car'>" + check + stock + title + photos + age + vin + "</div>");
+      });
+    }
+  </script>
+</body>
+
 </html>
-
-
